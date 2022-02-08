@@ -1,4 +1,4 @@
-import { Settings } from "./Settings";
+import { GlobalSettings } from "./Settings";
 
 export type Broadcast = {
   id: string;
@@ -10,7 +10,9 @@ export type Channel = {
   subscriberCount: number;
 };
 
-export async function getBroadcasts(settings: Settings): Promise<Broadcast[]> {
+export async function getBroadcasts(
+  settings: GlobalSettings,
+): Promise<Broadcast[]> {
   const endpoint = settings.apiEndpoint.replace(/\/$/, "");
   const url = `${endpoint}/broadcasts?status=active&_key=camelcase`;
 
@@ -22,7 +24,7 @@ export async function getBroadcasts(settings: Settings): Promise<Broadcast[]> {
   return broadcasts;
 }
 
-export async function getChannel(settings: Settings): Promise<Channel> {
+export async function getChannel(settings: GlobalSettings): Promise<Channel> {
   const endpoint = settings.apiEndpoint.replace(/\/$/, "");
   const url = `${endpoint}/channel?_key=camelcase`;
 

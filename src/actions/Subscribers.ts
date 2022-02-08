@@ -1,19 +1,21 @@
-import { Action, SettingsEvent } from "@fnando/streamdeck";
+import { Action, DidReceiveGlobalSettingsEvent } from "@fnando/streamdeck";
 
-import { Settings } from "../helpers/Settings";
+import { Settings, GlobalSettings } from "../helpers/Settings";
 import { getChannel } from "../helpers/youtube";
 import { i18n } from "../helpers/i18n";
 import * as images from "../images.json";
 
-class Subscribers extends Action {
-  public settings: Settings = {
+class Subscribers extends Action<Settings, GlobalSettings> {
+  public settings: GlobalSettings = {
     apiEndpoint: "",
     apiKey: "",
   };
 
   public tid = 0;
 
-  handleDidReceiveGlobalSettings({ settings }: SettingsEvent<Settings>): void {
+  handleDidReceiveGlobalSettings({
+    settings,
+  }: DidReceiveGlobalSettingsEvent<GlobalSettings>): void {
     this.settings = settings;
 
     if (this.validate()) {
@@ -21,7 +23,7 @@ class Subscribers extends Action {
     }
   }
 
-  override handleKeyDown(): void {
+  handleKeyDown(): void {
     if (this.validate()) {
       this.refresh();
     }
@@ -54,7 +56,7 @@ class Subscribers extends Action {
             thousand: "K",
             unit: "",
           },
-        })
+        }),
       );
       this.setImage(images.subscribersReady);
     };

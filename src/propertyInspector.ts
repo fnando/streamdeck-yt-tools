@@ -1,15 +1,18 @@
-import { PropertyInspector, SettingsEvent } from "@fnando/streamdeck";
+import {
+  PropertyInspector,
+  DidReceiveGlobalSettingsEvent,
+} from "@fnando/streamdeck";
 
-import { Settings } from "./helpers/Settings";
+import { GlobalSettings } from "./helpers/Settings";
 import plugin from "./plugin";
 
 class DefaultPropertyInspector extends PropertyInspector {
-  public settings: Settings = { apiEndpoint: "", apiKey: "" };
+  public settings: GlobalSettings = { apiEndpoint: "", apiKey: "" };
   public apiEndpointInput: HTMLInputElement;
   public apiKeyInput: HTMLInputElement;
   public saveButton: HTMLButtonElement;
 
-  override handleDidConnectToSocket(): void {
+  handleDidConnectToSocket(): void {
     this.apiEndpointInput = document.querySelector("#apiEndpoint");
     this.apiKeyInput = document.querySelector("#apiKey");
     this.saveButton = document.querySelector("#save");
@@ -22,22 +25,22 @@ class DefaultPropertyInspector extends PropertyInspector {
         return;
       }
 
-      this.setGlobalSettings<Settings>({
+      this.setGlobalSettings({
         apiEndpoint: this.apiEndpointInput.value,
         apiKey: this.apiKeyInput.value,
       });
     };
 
-    document.querySelectorAll<HTMLElement>("[data-url]").forEach(node => {
+    document.querySelectorAll<HTMLElement>("[data-url]").forEach((node) => {
       node.onclick = () => {
         this.openUrl(node.dataset.url);
-      }
+      };
     });
   }
 
-  override handleDidReceiveGlobalSettings({
+  handleDidReceiveGlobalSettings({
     settings,
-  }: SettingsEvent<Settings>): void {
+  }: DidReceiveGlobalSettingsEvent<GlobalSettings>): void {
     this.settings = settings;
 
     this.fillInForm();

@@ -1,11 +1,11 @@
-import { Action, SettingsEvent } from "@fnando/streamdeck";
+import { Action, DidReceiveGlobalSettingsEvent } from "@fnando/streamdeck";
 
-import { Settings } from "../helpers/Settings";
+import { Settings, GlobalSettings } from "../helpers/Settings";
 import { Broadcast, getBroadcasts } from "../helpers/youtube";
 import * as images from "../images.json";
 
-class LiveChat extends Action {
-  public settings: Settings = {
+class LiveChat extends Action<Settings, GlobalSettings> {
+  public settings: GlobalSettings = {
     apiEndpoint: "",
     apiKey: "",
   };
@@ -14,9 +14,9 @@ class LiveChat extends Action {
 
   public tid = 0;
 
-  override handleDidReceiveGlobalSettings({
+  handleDidReceiveGlobalSettings({
     settings,
-  }: SettingsEvent<Settings>): void {
+  }: DidReceiveGlobalSettingsEvent<GlobalSettings>): void {
     this.settings = settings;
 
     if (this.validate()) {
@@ -24,7 +24,7 @@ class LiveChat extends Action {
     }
   }
 
-  override handleKeyDown(): void {
+  handleKeyDown(): void {
     if (!this.validate()) {
       return;
     }
@@ -35,7 +35,7 @@ class LiveChat extends Action {
     }
 
     this.openURL(
-      `${this.settings.apiEndpoint}/open-chat?id=${this.broadcast.id}`
+      `${this.settings.apiEndpoint}/open-chat?id=${this.broadcast.id}`,
     );
 
     this.refresh();

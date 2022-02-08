@@ -1,12 +1,16 @@
-import { Action, KeyDownEvent, SettingsEvent } from "@fnando/streamdeck";
+import {
+  Action,
+  KeyDownEvent,
+  DidReceiveGlobalSettingsEvent,
+} from "@fnando/streamdeck";
 
 import { elapsed } from "../helpers/elapsed";
-import { Settings } from "../helpers/Settings";
+import { Settings, GlobalSettings } from "../helpers/Settings";
 import { Broadcast, getBroadcasts } from "../helpers/youtube";
 import * as images from "../images.json";
 
-class StreamDuration extends Action {
-  public settings: Settings = {
+class StreamDuration extends Action<Settings, GlobalSettings> {
+  public settings: GlobalSettings = {
     apiEndpoint: "",
     apiKey: "",
   };
@@ -15,9 +19,9 @@ class StreamDuration extends Action {
 
   public tid = 0;
 
-  override handleDidReceiveGlobalSettings({
+  handleDidReceiveGlobalSettings({
     settings,
-  }: SettingsEvent<Settings>): void {
+  }: DidReceiveGlobalSettingsEvent<GlobalSettings>): void {
     this.settings = settings;
 
     if (this.validate()) {
@@ -25,7 +29,7 @@ class StreamDuration extends Action {
     }
   }
 
-  override handleKeyDown(event: KeyDownEvent): void {
+  handleKeyDown(event: KeyDownEvent<Settings>): void {
     if (!this.validate()) {
       return;
     }

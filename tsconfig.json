@@ -3,6 +3,6 @@
     "outDir": "./dist",
     "resolveJsonModule": true,
     "lib": ["ES2015", "DOM"],
-    "types": ["node"]
+    "types": []
   }
 }
