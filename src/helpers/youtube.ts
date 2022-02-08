@@ -22,8 +22,6 @@ export async function getBroadcasts(settings: Settings): Promise<Broadcast[]> {
   return broadcasts;
 }
 
-let tid: { [key: string]: NodeJS.Timer } = {};
-
 export async function getChannel(settings: Settings): Promise<Channel> {
   const endpoint = settings.apiEndpoint.replace(/\/$/, "");
   const url = `${endpoint}/channel?_key=camelcase`;
