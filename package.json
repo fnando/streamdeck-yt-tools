@@ -2,7 +2,12 @@
   "private": true,
   "license": "MIT",
   "dependencies": {
+    "@fnando/codestyle": "^0.0.13",
+    "@fnando/eslint-config-codestyle": "^0.0.10",
     "@fnando/streamdeck": "../streamdeck",
+    "eslint": "^8.8.0",
+    "i18n-js": "^4.0.0-alpha.14",
+    "prettier": "^2.5.1",
     "typescript": "*"
   }
 }
