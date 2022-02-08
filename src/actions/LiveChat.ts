@@ -59,7 +59,7 @@ class LiveChat extends Action<Settings, GlobalSettings> {
     this.broadcast = broadcasts[0];
 
     clearTimeout(this.tid);
-    this.tid = setTimeout(this.refresh, 1000 * 60 * 3);
+    this.tid = setTimeout(() => this.refresh(), 1000 * 60 * 3);
 
     if (this.broadcast) {
       this.setImage(images.liveChat);

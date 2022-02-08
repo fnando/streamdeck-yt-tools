@@ -5,5 +5,9 @@
   "description": "More Youtube goodies for your Stream Deck.",
   "author": "Nando Vieira",
   "category": "Youtube",
-  "url": "https://github.com/fnando/streamdeck-yt-tools"
+  "url": "https://github.com/fnando/streamdeck-yt-tools",
+  "monitor": {
+    "windows": [],
+    "mac": []
+  }
 }
