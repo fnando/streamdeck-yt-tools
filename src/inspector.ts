@@ -1,12 +1,9 @@
-import {
-  PropertyInspector,
-  DidReceiveGlobalSettingsEvent,
-} from "@fnando/streamdeck";
+import { Inspector, DidReceiveGlobalSettingsEvent } from "@fnando/streamdeck";
 
 import { GlobalSettings } from "./helpers/Settings";
 import plugin from "./plugin";
 
-class DefaultPropertyInspector extends PropertyInspector {
+class DefaultInspector extends Inspector {
   public settings: GlobalSettings = { apiEndpoint: "", apiKey: "" };
   public apiEndpointInput: HTMLInputElement;
   public apiKeyInput: HTMLInputElement;
@@ -33,7 +30,7 @@ class DefaultPropertyInspector extends PropertyInspector {
 
     document.querySelectorAll<HTMLElement>("[data-url]").forEach((node) => {
       node.onclick = () => {
-        this.openUrl(node.dataset.url);
+        this.openURL(node.dataset.url);
       };
     });
   }
@@ -52,6 +49,6 @@ class DefaultPropertyInspector extends PropertyInspector {
   }
 }
 
-const propertyInspector = new DefaultPropertyInspector({ plugin });
+const inspector = new DefaultInspector({ plugin });
 
-propertyInspector.run();
+inspector.run();
